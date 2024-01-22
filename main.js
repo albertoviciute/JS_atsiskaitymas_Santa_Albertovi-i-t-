@@ -1,4 +1,4 @@
- let routes = [
+let routes = [
     {
         route: 'Vilnius - Klaipėda',
         departure: '2024-03-09 08:00',
@@ -44,7 +44,7 @@ function parseTime(departure) {
 }
 
 // Get durations in milisecs
-function getDurationInSec(duration){
+function getDurationInSec(duration) {
     let [hours, minutes] = duration.split(':');
     return (parseInt(hours, 10) * 60 + parseInt(minutes, 10)) * 60 * 1000;
 }
@@ -67,7 +67,7 @@ function returnArrival(departure, duration) {
 }
 
 // Print all routes info about trip
-function getAllRoutesInfo(routes){
+function getAllRoutesInfo(routes) {
     for (let i = 0; i < routes.length; i++) {
         let arrival = returnArrival(routes[i].departure, routes[i].duration);
         printTripInfo(routes[i].route, routes[i].departure, routes[i].duration, arrival);
@@ -80,10 +80,10 @@ function getAllRoutesInfo(routes){
 // a.2t -Rasti trumpiausios kelionės duomenis(f)ir juos atspausdinti(visą informaciją apie maršrutą)(f);
 
 // Print shortest route info about trip 
-function printShortestTrip(routes){
+function printShortestTrip(routes) {
     let shortest = routes[0];
     for (let i = 0; i < routes.length; i++) {
-        if (shortest.duration > routes[i].duration) {
+        if (getDurationInSec(shortest.duration) > getDurationInSec(routes[i].duration)) {
             shortest = routes[i];
         }
     }
@@ -95,10 +95,10 @@ function printShortestTrip(routes){
 
 // b.2t -Rasti ilgiausios kelionės duomenis(f)ir juos atspausdinti(visą informaciją apie maršrutą)(f);
 
-function printLongestTrip(routes){
+function printLongestTrip(routes) {
     let longest = routes[0];
     for (let i = 0; i < routes.length; i++) {
-        if (longest.duration < routes[i].duration) {
+        if (getDurationInSec(routes[i].duration) > getDurationInSec(longest.duration)) {
             longest = routes[i];
         }
     }
@@ -106,16 +106,15 @@ function printLongestTrip(routes){
     printTripInfo(longest.route, longest.departure, longest.duration, arrival);
 }
 
-//printLongestTrip(routes);
+// printLongestTrip(routes);
 
 // c.2t -Rasti(f)ir atspausdinti(visą informaciją apie maršrutus)(f)tik tas keliones, kurios truko ilgiau nei para;
 
-function printLongerThanDayTrip(routes){
+function printLongerThanDayTrip(routes) {
     let day = 24 * 60 * 60 * 1000;
     for (let i = 0; i < routes.length; i++) {
-        debugger;
         let duration = getDurationInSec(routes[i].duration);
-        if (duration > day){
+        if (duration > day) {
             let arrival = returnArrival(parseTime(routes[i].departure), routes[i].duration);
             printTripInfo(routes[i].route, routes[i].departure, routes[i].duration, arrival);
         }
